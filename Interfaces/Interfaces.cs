@@ -1,44 +1,15 @@
 namespace TOOP.Interfaces
 {
-    interface IVector : IList<double> { }
-
-    interface IParametricFunction
+    public interface IVector : IList<double>
     {
-        IFunction Bind(IVector parameters);
+        IVector GetRande(int v1, int v2);
     }
-
-    interface IFunction
+   
+    public interface IPoint
     {
-        double Value(IVector point);
-    }
-
-    interface IDifferentiableFunction : IFunction
-    {
-        // По параметрам исходной IParametricFunction
-        IVector Gradient(IVector point);
-    }
-    interface IFunctional
-    {
-        double Value(IFunction function);
-    }
-    interface IDifferentiableFunctional : IFunctional
-    {
-        IVector Gradient(IFunction function);
-    }
-    interface IMatrix : IList<IList<double>>
-    {
-
-    }
-    interface ILeastSquaresFunctional : IFunctional
-    {
-        IVector Residual(IFunction function);
-        IMatrix Jacobian(IFunction function);
-    }
-    interface IOptimizator
-    {
-        IVector Minimize(IFunctional objective, IParametricFunction function, IVector initialParameters, IVector minimumParameters = default, IVector maximumParameters = default);
-    }
-
+        double X {get; set;}
+        double Y {get; set;}
+    }    
      
     
     // class MinimizerMonteCarlo : IOptimizator
