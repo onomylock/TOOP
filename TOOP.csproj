@@ -11,4 +11,8 @@
     <PackageReference Include="Accord.Math" Version="3.8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Parameters\" />
+  </ItemGroup>
+
 </Project>

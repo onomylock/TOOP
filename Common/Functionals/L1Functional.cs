@@ -1,16 +1,17 @@
-using System.Runtime.CompilerServices;
 using TOOP.Interfaces;
 
 namespace TOOP.Common.Functionals
 {
-    class L1Functional : IDifferentiableFunctional
+    class L1Functional : IDifferentiableFunctional, ISetPoints
     {
-        public List<(double x, double y)> points;
+        List<(double x, double y)> points;
 
         public L1Functional(List<(double x, double y)> points)
         {
             this.points = points;
         }
+
+        public L1Functional() { }
 
         public IVector Gradient(IFunction function)
         {
@@ -38,6 +39,9 @@ namespace TOOP.Common.Functionals
             return sum;
         }
 
-
+        public void SetPoints(List<(double x, double y)> points)
+        {
+            this.points = points;
+        }
     }
 }

@@ -11,6 +11,8 @@ namespace TOOP.Common.Functionals
             this.points = points;
         }
 
+        public Integral(){ }
+
         double IFunctional.Value(IFunction function)
         {
             double a = points.First().X;

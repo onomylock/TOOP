@@ -1,20 +1,26 @@
 namespace TOOP.Interfaces
 {
-    interface IFunctional
+    public interface IFunctional
     {
         double Value(IFunction function);
     }
-    interface IDifferentiableFunctional : IFunctional
+
+    public interface IDifferentiableFunctional : IFunctional
     {
         IVector Gradient(IFunction function);
     }
-    interface IMatrix : IList<IList<double>>
+    public interface IMatrix : IList<IList<double>>
     {
 
     }
-    interface ILeastSquaresFunctional : IFunctional
+    public interface ILeastSquaresFunctional : IFunctional
     {
         IVector Residual(IFunction function);
         IMatrix Jacobian(IFunction function);
+    }
+
+    public interface ISetPoints
+    {
+        void SetPoints(List<(double x, double y)> points);
     }
 }

@@ -2,7 +2,7 @@ namespace TOOP.Interfaces
 {
     public interface IVector : IList<double>
     {
-        IVector GetRande(int v1, int v2);
+        IVector GetRange(int v1, int v2);
     }
    
     public interface IPoint

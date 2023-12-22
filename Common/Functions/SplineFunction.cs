@@ -49,13 +49,11 @@ namespace TOOP.Common.Functions
                     beta[i] = (F - A * beta[i - 1]) / z;
                 }
 
-                // Нахождение решения - обратный ход метода прогонки
                 for (int i = n - 2; i > 0; --i)
                 {
                     _splines[i].c = alpha[i] * _splines[i + 1].c + beta[i];
                 }
 
-                // По известным коэффициентам c[i] находим значения b[i] и d[i]
                 for (int i = n - 1; i > 0; --i)
                 {
                     double hi = _points[i].X - _points[i - 1].X;
@@ -107,6 +105,6 @@ namespace TOOP.Common.Functions
             }
         }
 
-        IFunction IParametricFunction.Bind(IVector parameters) => new InternalFunction(parameters);
+        public IFunction Bind(IVector parameters) => new InternalFunction(parameters);
     }
 }

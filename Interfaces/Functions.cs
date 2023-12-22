@@ -1,16 +1,16 @@
 namespace TOOP.Interfaces
 {
-    interface IParametricFunction
+    public interface IParametricFunction
     {
         IFunction Bind(IVector parameters);
     }
 
-    interface IFunction
+    public interface IFunction
     {
         double Value(IVector point);
     }
 
-    interface IDifferentiableFunction : IFunction
+    public interface IDifferentiableFunction : IFunction
     {
         // По параметрам исходной IParametricFunction
         IVector Gradient(IVector point);

@@ -4,14 +4,13 @@ namespace TOOP.Common.Functions
 {
     public class LineFunction : IParametricFunction
     {        
-
         class InternalLineFunction : IFunction, IDifferentiableFunction
         {
             public IVector Parameters {get; set;}
 
             public IVector Gradient(IVector point)
             {
-                return Parameters.GetRande(0, Parameters.Count() - 2);
+                return Parameters.GetRange(0, Parameters.Count() - 2);
             }
 
             public double Value(IVector point)
@@ -26,6 +25,6 @@ namespace TOOP.Common.Functions
             }
         }
 
-        IFunction IParametricFunction.Bind(IVector parameters) => new InternalLineFunction() { Parameters = parameters };       
+        public IFunction Bind(IVector parameters) => new InternalLineFunction() { Parameters = parameters };       
     }
 }

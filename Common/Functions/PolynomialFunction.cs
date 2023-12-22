@@ -20,6 +20,6 @@ namespace TOOP.Common.Functions
             }
         }
 
-        IFunction IParametricFunction.Bind(IVector parameters) => new InternalFunction(){Parameters = parameters};
+        public IFunction Bind(IVector parameters) => new InternalFunction(){Parameters = parameters};
     }
 }
