@@ -13,7 +13,7 @@ namespace ConsoleApp
                 ReadVector(out IVector parameters, "Input/params.txt");
                 var func = new LinearFunction();
                 var fun = func.Bind(parameters);
-                Console.WriteLine(fun.Value(new Vector([1.0, 2.0])));
+                Console.WriteLine(fun.Value(new Vector([2.0])));
             }
             catch (Exception ex)
             {

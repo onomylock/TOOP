@@ -81,11 +81,11 @@ namespace ConsoleApp.Types
             return res;
         }
 
-        public void AddRange(double[] arr)
+        public void AddRange(IEnumerable<double> arr)
         {                                            
-            var result = new double[vector.Length + arr.Length];
-            vector.CopyTo(result, 0);
-            arr.CopyTo(result, vector.Length);
+            var result = new double[vector.Length + arr.Count()];
+            vector.CopyTo(result, 0);            
+            result.Concat(arr);            
             vector = result;
         }        
     }
