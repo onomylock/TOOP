@@ -1,92 +1,28 @@
-using System.Collections;
-using System.Dynamic;
 using ConsoleApp.Interfaces;
 
 namespace ConsoleApp.Types
 {
     public class Vector : IVector
-    {
-        public Vector(double[] vector) => this.vector = vector;
-        public Vector() {}
+    {                
+        public List<double> Doubles { get; set; } = new List<double>();
 
-        double[] vector {get; set;} = Array.Empty<double>();
+        public Vector() { }
 
-        public double this[int index] { get => vector[index]; set => vector[index] = value; }        
+        public Vector(IEnumerable<double> doubles) => Doubles = doubles.ToList();
 
-        public int Count => vector.Length;
+        public static Vector operator -(Vector v1, Vector v2) => 
+            new(v1.Doubles.Zip(v2.Doubles, (elem1, elem2) => elem1 - elem2));
 
-        public bool IsReadOnly => false;
+        public static Vector operator +(Vector v1, Vector v2) => 
+            new(v1.Doubles.Zip(v2.Doubles, (elem1, elem2) => elem1 + elem2));
 
-        public void Add(double item) => vector.Append(item);
+        public static Vector operator /(Vector v1, double val) =>
+            new(v1.Doubles.Select(x => x / val));
 
-        public void Clear() => Array.Clear(vector);
+        public static double NormL1(Vector v1, Vector v2) => (v1 - v2).Doubles.Select(Math.Abs).Sum();
 
-        public bool Contains(double item) => vector.Contains(item);
+        public static double NormL2(Vector v1, Vector v2) => Math.Sqrt((v1 - v2).Doubles.Select(x => Math.Pow(x, 2)).Sum());            
 
-        public void CopyTo(double[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerator<double> GetEnumerator() => GetEnumerator();
-
-        public int IndexOf(double item)
-        {
-            return Array.IndexOf(vector, item);
-        }
-
-        public void Insert(int index, double item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Remove(double item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveAt(int index)
-        {
-            throw new NotImplementedException();
-        }        
-
-        IEnumerator IEnumerable.GetEnumerator() => vector.GetEnumerator();
-
-        public IVector GetRange(int v1, int v2)
-        {
-            IVector result = new Vector();
-            
-            for (int i = v1; i < v2; i++)
-                result.Add(vector[i]);            
-            return result;
-        }
-
-        public static Vector operator -(Vector v1, Vector v2)
-        {
-            var res = new Vector();
-            for(int i = 0; i < v1.Count(); i++)
-            {
-                res.Add(v1[i] - v2[i]);
-            }
-            return res;
-        }
-
-        public static Vector operator +(Vector v1, Vector v2)
-        {
-            var res = new Vector();
-            for(int i = 0; i < v1.Count(); i++)
-            {
-                res.Add(v1[i] + v2[i]);
-            }
-            return res;
-        }
-
-        public void AddRange(IEnumerable<double> arr)
-        {                                            
-            var result = new double[vector.Length + arr.Count()];
-            vector.CopyTo(result, 0);            
-            result.Concat(arr);            
-            vector = result;
-        }        
+        public static double NormLInf(Vector v1, Vector v2) => (v1 - v2).Doubles.Select(Math.Abs).Max();        
     }
 }

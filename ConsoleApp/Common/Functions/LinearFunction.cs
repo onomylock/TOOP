@@ -1,4 +1,5 @@
 using ConsoleApp.Interfaces;
+using ConsoleApp.Types;
 
 namespace ConsoleApp.Common.Functions
 {
@@ -7,18 +8,26 @@ namespace ConsoleApp.Common.Functions
         internal class InternalFunction(IVector parameters) : IFunction, IDifferentiableFunction
         {
             IVector parameters { get; set; } = parameters;
-
-            public IVector Gradient(IVector point) => parameters.GetRange(0, parameters.Count() - 2);
+            
+            public IVector Gradient(IVector point)
+            {
+                var res = parameters.Doubles.Take(parameters.Doubles.Count() - 1).ToList();
+                var grad = Math.Sqrt(res.Select(x => Math.Pow(x, 2)).Sum());
+                
+                return new Vector(res) / grad;
+            }
 
             public double Value(IVector point)
             {
+                if ((parameters.Doubles.Count() - 1) != point.Doubles.Count())
+                    throw new InvalidDataException();
                 double res = 0;
-                for(int i = 0; i < point.Count(); i++)
+                for(int i = 0; i < point.Doubles.Count(); i++)
                 {
-                    res += parameters[i] * point[i];
-                }
+                    res += parameters.Doubles[i] * point.Doubles[i];
+                }                
 
-                return res + parameters.Last();
+                return res + parameters.Doubles.Last();
             }
         }
 

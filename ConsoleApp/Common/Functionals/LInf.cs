@@ -7,9 +7,9 @@ namespace ConsoleApp.Common.Functionals
     public class LInf : IFunctional
     {
         List<IVector> points;
-        IVector funcPoints;
+        Vector funcPoints;
 
-        public LInf(List<IVector> points, IVector funcPoints)
+        public LInf(List<IVector> points, Vector funcPoints)
         {
             this.points = points;
             this.funcPoints = funcPoints;
@@ -17,13 +17,11 @@ namespace ConsoleApp.Common.Functionals
         public double Value(IFunction function)
         {
             var funVal = new Vector();
-            foreach(var point in points)
+            foreach (var point in points)
             {
-                funVal.Add(function.Value(point));
+                funVal.Doubles.Add(function.Value(point));
             }
-            var res = MathVec.Build.Dense([.. (funVal - (Vector)funcPoints)]);
-            
-            return res.InfinityNorm();
+            return Vector.NormLInf(funVal, funcPoints);
         }
     }
 }

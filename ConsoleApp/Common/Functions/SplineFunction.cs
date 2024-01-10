@@ -12,14 +12,14 @@ namespace ConsoleApp.Common.Functions
             double[] yVal;
             public InternalFunction(IVector parameters)
             {            
-                xVal = parameters.Where(x => parameters.IndexOf(x) % 2 == 0).ToArray();
-                yVal = parameters.Where(x => parameters.IndexOf(x) % 2 == 1).ToArray();
+                xVal = parameters.Doubles.Where(x => parameters.Doubles.IndexOf(x) % 2 == 0).ToArray();
+                yVal = parameters.Doubles.Where(x => parameters.Doubles.IndexOf(x) % 2 == 1).ToArray();
                 cubicSpline = CubicSpline.InterpolateAkimaSorted(xVal, yVal);
             }
             
             public double Value(IVector point)
             {
-                return cubicSpline.Interpolate(point.First());
+                return cubicSpline.Interpolate(point.Doubles.First());
             }
         }
 

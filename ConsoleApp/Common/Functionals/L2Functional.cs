@@ -7,9 +7,9 @@ namespace ConsoleApp.Common.Functionals
     public class L2Functional : ILeastSquaresFunctional
     {
         List<IVector> points;
-        IVector funcPoints;
+        Vector funcPoints;
 
-        public L2Functional(List<IVector> points, IVector funcPoints)
+        public L2Functional(List<IVector> points, Vector funcPoints)
         {
             this.points = points;
             this.funcPoints = funcPoints;
@@ -17,13 +17,13 @@ namespace ConsoleApp.Common.Functionals
 
         public IMatrix Jacobian(IFunction function)
         {
-            if(!(function is IDifferentiableFunction differentiableFunction))
+            if (!(function is IDifferentiableFunction differentiableFunction))
                 throw new InvalidDataException();
 
             var res = new Matrix();
-            foreach(var point in points)
+            foreach (var point in points)
             {
-                res.Add(differentiableFunction.Gradient(point));
+                res.Add(differentiableFunction.Gradient(point).Doubles);
             }
 
             return res;
@@ -33,9 +33,9 @@ namespace ConsoleApp.Common.Functionals
         {
             var res = new Vector();
             int index = 0;
-            points.ForEach(x => 
+            points.ForEach(x =>
             {
-                res.Add(function.Value(x) - funcPoints[index]);
+                res.Doubles.Add(function.Value(x) - funcPoints.Doubles[index]);
                 index++;
             });
 
@@ -45,13 +45,12 @@ namespace ConsoleApp.Common.Functionals
         public double Value(IFunction function)
         {
             var funVal = new Vector();
-            foreach(var point in points)
+            foreach (var point in points)
             {
-                funVal.Add(function.Value(point));
-            }
-            var res = MathVec.Build.Dense([.. (funVal - (Vector)funcPoints)]);
-            
-            return res.L2Norm();
+                funVal.Doubles.Add(function.Value(point));
+            }            
+
+            return Vector.NormL2(funcPoints, funVal);
         }
     }
 }
